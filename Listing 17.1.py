@@ -1,4 +1,4 @@
-# First app on PyQt
+"""# First app on PyQt"""
 
 from PyQt5 import QtWidgets
 import sys
