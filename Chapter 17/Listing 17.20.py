@@ -22,7 +22,7 @@ class MyWindow(QtWidgets.QPushButton):
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    splash = QtWidgets.QSplashScreen(QtGui.QPixmap("splashscreen.jpg"))
+    splash = QtWidgets.QSplashScreen(QtGui.QPixmap("../splashscreen.jpg"))
     splash.showMessage("Data loading... 0%", QtCore.Qt.AlignHCenter | QtCore.Qt.AlignBottom, QtCore.Qt.black)
     splash.show()  # отображаем заставку
     QtWidgets.qApp.processEvents()  # запускаем оборот цикла
