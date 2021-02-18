@@ -5,6 +5,10 @@ Chapter 13
     Listing 13.2 - Создание атрибута и метода
     Listing 13.3 - Функции getattr(), setattr() и hasattr()
     Listing 13.4 - Атрибуты объекта класса и экземпляра класса
+    Listing 13.5 - Метод __init--()
+    Listing 13.6 - Метод __del__()
+    Listing 13.7 - Наследование
+    Listing 13.8 - Переопределение методов
 
 Chapter 17
     Listing 17.1 - Первая программа на PyQt
