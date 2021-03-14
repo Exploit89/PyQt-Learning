@@ -32,7 +32,6 @@ class DescriptionView(QtWidgets.QVBoxLayout):
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
-
         self.my_tree_view = DescriptionView()
 
         main_layout = QHBoxLayout()
