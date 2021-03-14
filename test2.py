@@ -19,8 +19,14 @@ class DescriptionView(QtWidgets.QVBoxLayout):
         self.powervalue = QtWidgets.QProgressBar(self.powerlabel)
         self.powervalue.setFixedSize(280, 5)
         self.powervalue.setTextVisible(False)
-        self.powervalue.setMaximum(self.data2)
+        self.powervalue.setMaximum(int(self.data2))
         self.powervalue.setValue(self.data1)
+
+        self.addLayout(self.power)
+
+        self.power.addWidget(self.powerlabel)
+        self.power.addWidget(self.power_data)
+        self.power.addWidget(self.powervalue)
 
 
 class MainWindow(QWidget):
@@ -31,17 +37,16 @@ class MainWindow(QWidget):
 
         main_layout = QHBoxLayout()
         main_layout.addLayout(self.my_tree_view)
-        self.my_tree_view.addWidget(self.my_tree_view.powerlabel)
-        self.my_tree_view.addWidget(self.my_tree_view.power_data)
-        self.my_tree_view.addWidget(self.my_tree_view.powervalue)
+        # self.my_tree_view.addWidget(self.my_tree_view.powerlabel)
+        # self.my_tree_view.addWidget(self.my_tree_view.power_data)
+        # self.my_tree_view.addWidget(self.my_tree_view.powervalue)
 
         self.setLayout(main_layout)
 
         a = 10
-
         if a > 5:
-            self.my_tree_view.data2 = 50
-            print(self.my_tree_view.data2)
+            DescriptionView.data2 = 50
+            print(DescriptionView.data2)
         else:
             pass
 
@@ -50,6 +55,7 @@ if __name__ == '__main__':
     app = QApplication([])
 
     mw = MainWindow()
+    mw.resize(300, 200)
     mw.show()
 
     app.exec()
