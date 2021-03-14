@@ -44,8 +44,9 @@ class MainWindow(QWidget):
 
         a = 10
         if a > 5:
-            DescriptionView.data2 = 50
-            print(DescriptionView.data2)
+            data2 = 50
+            print(data2)
+            self.my_tree_view.power_data.setText(str(data2))
         else:
             pass
 
