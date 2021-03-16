@@ -1,61 +1,60 @@
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import Qt
+# UPD advice from S. Nick
+from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QLabel, QProgressBar, \
+    QVBoxLayout, QApplication
 
-from PyQt5.QtWidgets import *
 
+class DescriptionView(QWidget):  # - QtWidgets.QVBoxLayout):
+    def __init__(self):
+        super().__init__()
+        self.value = 0
+        self.minValue = 0
+        self.maxValue = 100
 
-class DescriptionView(QtWidgets.QVBoxLayout):
+        self.power_data = QLabel(
+            f"Power: {self.value} / {self.maxValue}",
+            alignment=Qt.AlignLeft | Qt.AlignTop
+        )
 
-    def __init__(self, parent=None):
-        QtWidgets.QVBoxLayout.__init__(self, parent)
+        self.progressBar = QProgressBar()
+        self.progressBar.setProperty("value", 0)
+        self.progressBar.setFixedHeight(7)
+        self.progressBar.setTextVisible(False)
+        self.progressBar.setRange(self.minValue, self.maxValue)
 
-        self.data1 = int(0)
-        self.data2 = int(100)
-
-        self.power = QtWidgets.QHBoxLayout()
-        self.powerlabel = QLabel("Power: ", alignment=Qt.AlignLeft | Qt.AlignTop)
-        self.power_data = QLabel(str(self.data1) + "/" + str(self.data2), alignment=Qt.AlignLeft | Qt.AlignTop)
-
-        self.powervalue = QtWidgets.QProgressBar(self.powerlabel)
-        self.powervalue.setFixedSize(280, 5)
-        self.powervalue.setTextVisible(False)
-        self.powervalue.setMaximum(int(self.data2))
-        self.powervalue.setValue(self.data1)
-
-        self.addLayout(self.power)
-
-        self.power.addWidget(self.powerlabel)
-        self.power.addWidget(self.power_data)
-        self.power.addWidget(self.powervalue)
+        layout = QVBoxLayout(self)
+        layout.addWidget(self.power_data)
+        layout.addWidget(self.progressBar)
+        layout.addStretch()
 
 
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
+
         self.my_tree_view = DescriptionView()
+        main_layout = QHBoxLayout(self)
+        main_layout.addWidget(self.my_tree_view)
 
-        main_layout = QHBoxLayout()
-        main_layout.addLayout(self.my_tree_view)
-        # self.my_tree_view.addWidget(self.my_tree_view.powerlabel)
-        # self.my_tree_view.addWidget(self.my_tree_view.power_data)
-        # self.my_tree_view.addWidget(self.my_tree_view.powervalue)
+        self.timer = QTimer()
+        self.timer.setInterval(100)
+        self.timer.timeout.connect(self.update_time)
+        self.timer.start()
 
-        self.setLayout(main_layout)
-
-        a = 10
-        if a > 5:
-            data2 = 50
-            print(data2)
-            self.my_tree_view.power_data.setText(str(data2))
-        else:
-            pass
+    def update_time(self):
+        if self.my_tree_view.value > self.my_tree_view.maxValue:
+            self.timer.stop()
+        elif self.my_tree_view.value > 15:
+            self.my_tree_view.progressBar.setValue(self.my_tree_view.value)
+            text = f"Power: {self.my_tree_view.value} / {self.my_tree_view.maxValue}"
+            self.my_tree_view.power_data.setText(text)
+        self.my_tree_view.value += 1
 
 
-if __name__ == '__main__':
-    app = QApplication([])
+if __name__ == "__main__":
+    import sys
 
+    app = QApplication(sys.argv)
     mw = MainWindow()
-    mw.resize(300, 200)
     mw.show()
-
-    app.exec()
+    sys.exit(app.exec_())
